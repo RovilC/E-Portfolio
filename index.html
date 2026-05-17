@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading in Visual Arts - Portfolio Matrix</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght=300;400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --netflix-red: #E50914;
+    --bg-black: #141414;
+    --text-white: #FFFFFF;
+    --text-muted: #808080;
+    --surface-gray: #181818;
+    --divider-gray: #404040;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: var(--bg-black);
+    color: var(--text-white);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* Custom Netflix Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-black);
+}
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+/* Global Navbar */
+.netflix-navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 68px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4%;
+    z-index: 100;
+    transition: background-color 0.3s;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.brand-logo {
+    color: var(--netflix-red);
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 18px;
+    list-style: none;
+    margin: 0; padding: 0;
+    font-size: 14px;
+}
+
+.nav-item {
+    color: #E5E5E5;
+    font-weight: 500;
+}
+
+/* Navbar Right Account Area */
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.account-menu {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #E5E5E5;
+    transition: color 0.2s;
+}
+
+.account-menu:hover .user-name {
+    color: var(--text-white);
+}
+
+.avatar-box {
+    width: 32px;
+    height: 32px;
+    background-color: #3b5998;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-white);
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.account-menu:hover .avatar-box {
+    border-color: var(--text-white);
+}
+
+/* Hero Spotlight Billboard */
+.billboard {
+    height: 85vh;
+    width: 100%;
+    position: relative;
+    background-size: cover;
+    background-position: center center;
+    display: flex;
+    align-items: center;
+    padding: 0 4%;
+    box-sizing: border-box;
+}
+
+.billboard-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(77deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 85%),
+                linear-gradient(to top, var(--bg-black) 0%, transparent 20%);
+    z-index: 1;
+}
+
+.billboard-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    margin-top: 80px;
+}
+
+.billboard-tag {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--netflix-red);
+}
+
+.billboard h1 {
+    font-size: 48px;
+    font-weight: 900;
+    margin: 0 0 16px 0;
+    line-height: 1.1;
+}
+
+.billboard p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #e5e5e5;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    text-align: justify;
+}
+
+/* Subject Overview Card */
+.subject-overview-box {
+    background: rgba(24, 24, 24, 0.85);
+    border-left: 4px solid var(--netflix-red);
+    padding: 16px 20px;
+    border-radius: 4px;
+    backdrop-filter: blur(5px);
+    margin-top: 16px;
+}
+
+.subject-overview-box h4 {
+    margin: 0 0 6px 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-white);
+}
+
+.subject-overview-box p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-muted);
+    text-align: justify;
+}
+
+/* Category Slider Rows Container */
+.category-container {
+    padding: 0 4% 50px 4%;
+    position: relative;
+    margin-top: -60px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.row-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.card-row {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 12px 0;
+}
+
+.card-row::-webkit-scrollbar {
+    display: none;
+}
+
+.media-card {
+    min-width: 240px;
+    width: 240px;
+    height: 135px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease, border-radius 0.3s;
+}
+
+.media-card:hover {
+    transform: scale(1.3);
+    z-index: 20;
+    border-radius: 6px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+}
+
+.card-meta-pop {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+    padding: 8px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.media-card:hover .card-meta-pop {
+    opacity: 1;
+}
+
+.pop-title {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.pop-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.pop-tags {
+    font-size: 10px;
+    color: var(--netflix-red);
+    font-weight: 700;
+}
+
+.play-mini-badge {
+    background-color: var(--text-white);
+    color: black;
+    font-size: 8px;
+    font-weight: 900;
+    padding: 1px 4px;
+    border-radius: 2px;
+    text-transform: uppercase;
+}
+
+/* Immersive More Info Modal Layout */
+.modal-backdrop {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 200;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 40px 0;
+}
+
+.modal-content {
+    background-color: var(--surface-gray);
+    width: 100%;
+    max-width: 800px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+    margin-bottom: 40px;
+}
+
+.modal-billboard {
+    height: 380px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 32px;
+    box-sizing: border-box;
+}
+
+.modal-billboard::before {
+    content: '';
+    position: absolute;
+    top:0; left:0; right:0; bottom:0;
+    background: linear-gradient(to top, var(--surface-gray), transparent);
+}
+
+.modal-title-area {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.modal-action-row {
+    display: flex;
+    gap: 12px;
+}
+
+.modal-play-btn {
+    background-color: var(--netflix-red);
+    color: var(--text-white);
+    border: none;
+    padding: 10px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+    text-decoration: none;
+}
+
+.modal-play-btn:hover {
+    background-color: #b81d24;
+}
+
+.modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 36px; height: 36px;
+    background-color: var(--bg-black);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-white);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal-body {
+    padding: 0 48px 48px 48px;
+}
+
+.modal-overview-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 48px;
+    padding-top: 10px;
+    padding-bottom: 32px;
+}
+
+.essay-block {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #e5e5e5;
+    white-space: pre-line;
+    text-align: justify;
+}
+
+.metadata-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.meta-label {
+    color: var(--text-muted);
+}
+
+.meta-value {
+    color: var(--text-white);
+}
+
+.badge-tag {
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 1px 6px;
+    font-size: 12px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+/* Netflix True Series Episodes Component */
+.episodes-section {
+    border-top: 1px solid var(--divider-gray);
+    padding-top: 32px;
+    display: none;
+}
+
+.episodes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.episodes-header h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.episodes-header .series-tag {
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.episode-row {
+    display: grid;
+    grid-template-columns: 40px 150px 1fr;
+    gap: 16px;
+    align-items: center;
+    padding: 24px;
+    border-bottom: 1px solid var(--divider-gray);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none;
+}
+
+.episode-row:last-child {
+    border-bottom: none;
+}
+
+.episode-row:hover {
+    background-color: #222;
+}
+
+.ep-number {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.ep-thumb {
+    width: 150px;
+    height: 85px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 4px;
+}
+
+.ep-meta h4 {
+    margin: 0 0 6px 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+.ep-meta p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-muted);
+    text-align: justify;
+}
+</style>
+</head>
+<body>
+
+    <!-- STREAMING NAVIGATION BAR -->
+    <nav class="netflix-navbar" id="navbar">
+        <div class="navbar-left">
+            <div class="brand-logo">E-Portfolio</div>
+        </div>
+        <div class="navbar-right">
+            <div class="account-menu">
+                <span class="user-name">John Rovil Cereno</span>
+                <div class="avatar-box">J</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN INTERACTIVE HUB -->
+    <div>
+        
+        <!-- SPOTLIGHT BILLBOARD HERO CARD -->
+        <section class="billboard" id="heroCard" style="background-image: url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1200&q=80');">
+            <div class="billboard-overlay"></div>
+            
+            <div class="billboard-content">
+                <div class="billboard-tag">Course</div>
+                <h1>Reading in Visual Arts</h1>
+                <p>GE ELEC 6</p>
+                
+                <!-- Subject Overview Reading Section -->
+                <div class="subject-overview-box">
+                    <h4>Reading in Visual Arts: Subject Overview</h4>
+                    <p>This portfolio presents a curated collection of work developed within the structured framework of GE ELEC 6: Reading Visual Art. The course establishes a foundational methodology for navigating visual culture, balancing the core elements and principles of art with critical approaches to authorial intent and audience interpretation.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTAINER GRID FOR MULTIPLE CAROUSEL ROWS -->
+        <div class="category-container">
+            
+            <!-- ROW 1: DIGITAL PORTFOLIO ARTIFACT DELIVERABLES -->
+            <div>
+                <div class="row-title">Semester Deliverables</div>
+                <div class="card-row" id="deliverablesRow">
+                    <!-- JavaScript populates here -->
+                </div>
+            </div>
+
+            <!-- ROW 2: INSTRUCTOR REVIEWS CAROUSEL -->
+            <div>
+                <div class="row-title">Course Feedback</div>
+                <div class="card-row" id="reviewsRow">
+                    <!-- JavaScript populates here -->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- DETAILS IMMERSIVE MODAL PORTAL -->
+    <div class="modal-backdrop" id="infoPortalModal" onclick="closeGateModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeGateModal(null)">✕</button>
+            
+            <div class="modal-billboard" id="modalHeroArt">
+                <div class="modal-title-area">
+                    <h2 id="modalTitleText" style="font-size: 36px; font-weight: 900; margin: 0 0 12px 0;">Project Title</h2>
+                    <div class="modal-action-row" id="modalActionContainer">
+                        <!-- Dynamic Play button maps here via JS rules if content is playable -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <!-- Basic Content Section (Shared Layout) -->
+                <div class="modal-overview-grid">
+                    <div>
+                        <div style="margin-bottom: 16px; display: flex; gap: 12px; align-items: center;">
+                            <span style="color: #46d369; font-weight: 700;">Verified Entry</span>
+                            <span class="badge-tag" id="modalMetaBadge">Report</span>
+                            <span id="modalMetaDate">2026</span>
+                        </div>
+                        <div class="essay-block" id="modalMainText">
+                            Detailed content text inserts here...
+                        </div>
+                    </div>
+                    <div class="metadata-sidebar">
+                        <div>
+                            <span class="meta-label">Course: </span>
+                            <span class="meta-value">Reading Visual Arts</span>
+                        </div>
+                        <div>
+                            <span class="meta-label" id="sidebarContextLabel">Tags: </span>
+                            <span class="meta-value" id="modalMetaTags">Formalism</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- True Netflix Style Series Episodes Window -->
+                <div class="episodes-section" id="modalEpisodesBox">
+                    <div class="episodes-header">
+                        <h3>Presentation Requirements</h3>
+                        <span class="series-tag" id="episodeCountTag">3 Parts</span>
+                    </div>
+                    <div id="episodesListTarget">
+                        <!-- Dynamic slides inject here -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<script>
+// Row 1 Data Array (Positions of Digital Image and Iconography swapped)
+const deliverablesData = [
+    {
+        title: "Theater",
+        type: "Presentation",
+        date: "April 23, 2026",
+        image: "images/snowhite.png",
+        tags: "Theater, Visual Scenography",
+        isSeries: true,
+        playable: false,
+        content: `Learning about Philippine theater has completely changed how I view the stage, showing me that it is far more than just entertainment—it is a powerful mirror of our national identity. Tracing its evolution from indigenous rituals like Hinilawod to colonial Sarswela and modern "seditious" plays helped me realize how theater has always been at the heart of our social bonding and spiritual expression. I learned that the magic of live performance lies in its immediacy; because the audience’s raw reactions directly shape the energy and rhythm of the actors, it becomes a shared human experience. Discovering how contemporary productions like Bar Boys: The Musical and Pingkian: Isang Musikal tackle systemic issues was a major eye-opener for me. It made me appreciate how theater acts as a vital pillar of national resilience—a literal laboratory where we, as a public, can process collective traumas and stand up for historical ideals.`,
+        episodes: [
+            {
+                title: "Theater: Presentation Layout",
+                summary: "This presentation introduces visual compositions, spatial dynamics, and scenographic models affecting audience reception variables.",
+                thumbnail: "images/theater.png",
+                link: "https://www.canva.com/design/DAHE8uV8GBE/Y-w4nw1gsO0X1TAPvQrnkA/edit"
+            },
+            {
+                title: "Theater: Discussion Paper",
+                summary: "This paper explores the evolution and fundamental elements of theater while arguing that the contemporary Philippine stage serves as a vital, ethical, and increasingly accessible laboratory for national identity and social transformation.",
+                thumbnail: "images/paper.png",
+                link: "https://drive.google.com/file/d/1GGsUSYGosLiaYgZdHTEXYenW1PT2vKsR/view"
+            }
+        ]
+    },
+    {
+        title: "Theater: Video Presentation",
+        type: "Video Assignment",
+        date: "April 23, 2026",
+        image: "images/reporting.png",  
+        tags: "Presentation, Google Meet",
+        isSeries: false,
+        playable: true,
+        driveUrl: "https://drive.google.com/file/d/15SIiRrd67YBvTYZdpDScDKntO5kUBd4q/view?usp=sharing",
+        content: `This reporting on stagecraft and script design allowed me to deeply appreciate how the technical, artistic, and literary components of theater must seamlessly interlock to breathe life into a production. I learned that elements like scenery, costume, lighting, and sound are not merely decorative background pieces, but are active, collaborative tools used to establish the exact "mood and spirit" of a play. For instance, I realized how critical focus can be shifted entirely by the subtle intensity or color of lighting, or how a character's socio-economic status and identity are immediately telegraphed to the audience through intentional costume choices before a single line is spoken. After this video report taught me that theater is a living, breathing ecosystem, where the words on a page depend heavily on the hidden mechanics of stagecraft to create a truly immersive experience for the audience.`
+    },
+    {
+        title: "Sa Kambas ng Lipunan",
+        type: "Analysis Report",
+        date: "February 10, 2026",
+        image: "images/analysis.png",
+        tags: "Documentary, Formal Analysis",
+        isSeries: false,
+        playable: false,
+        content: `The story of Joey Velasco serves as a profound reminder that art, at its core, is a democratic and spiritual equalizer. His journey teaches us that true artistic vision cannot be manufactured by formal institutions or bought with privilege; rather, it is born from deep empathy and an open heart. By thrusting the marginalized, the forgotten, and the ordinary street children into the literal and metaphorical spotlight of Hapag ng Pag-asa, Velasco completely reframes what we consider "worthy" of fine art. For me, learning about his work shifts the definition of success in creative practice. It shows that the ultimate purpose of gaining a visual voice is not to achieve personal fame, but to share that platform with those who have been silenced by society. His legacy challenges us to look closer at our own surroundings—to see the profound human dignity hidden within everyday struggles, and to realize that our own creativity is most powerful when it is used as an instrument for social consciousness, compassion, and hope.`
+    }
+];
+
+// Row 2 Data Array (Instructor Feedback)
+const reviewsData = [
+    {
+        title: "Feedback: Instructor",
+        type: "Feedback",
+        date: "Term Evaluation",
+        image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80",
+        tags: "Johanna Alcantara",
+        isSeries: false,
+        playable: false,
+        content: `Reflecting on this past semester, our time in your class has been both engaging and profoundly meaningful. Although external circumstances occasionally disrupted our regular schedule, the sessions we did share left a lasting impact on my academic journey. I deeply admire your mastery of the subject matter and the compelling presence every time we are in a classroom. You consistently cultivate an atmosphere that is both vibrant and intellectually stimulating, effortlessly capturing our attention. I am incredibly grateful that your priority was always our actual comprehension and retention of the concepts, rather than simply rushing to complete the syllabus.
+
+I would like to express my sincere gratitude  for your exceptional instructional approach, compassion and understanding you extended to both myself and our entire block throughout the term. Your support has guided us in ways you may not even realize, and we are truly grateful. Delving into the study of Visual Arts under your guidance has undoubtedly been one of the most enriching experiences. Your ability to make complex ideas accessible and engaging has not only deepened our understanding but also ignited a genuine passion for the subject. I am truly thankful for the opportunity to learn from you and for the positive impact you have had on my academic growth. Thank you once again for your dedication and for creating such a memorable learning experience.`
+    },
+    {
+        title: "Feedback: Reading Visual Arts",
+        type: "Feedback",
+        date: "Project Evaluation",
+        image: "images/visual.png",
+        tags: "Johanna Alcantara",
+        isSeries: false,
+        playable: false,
+        content: `I wasn’t a stranger to art, but I didn’t realize how much I still had left to learn about truly reading it. As someone who already loves making and creating, I thought I understood visual language. I was used to the instinctual, hands-on rush of bringing an idea to life, but this course challenged me to slow down and analyze the invisible forces behind why visual art actually works. Moving through the early weeks—exploring how meaning shifts entirely between what an author intends and how an audience decodes it—was a massive turning point for me. It made me realize that my own creative choices aren't just aesthetic preferences; they are part of an active, ongoing dialogue with whoever stands in front of my work.
+
+The curriculum really opened my eyes to the deep socio-political weight that art carries. Seeing how a single piece like Joey Velasco’s Hapag ng Pag-asa can function as a tool for social consciousness, empathy, and national resilience completely expanded my view of what art can achieve. It taught me that our creative voices are most potent when they serve as a platform for the forgotten. As the term progressed into our reporting weeks on photography, cinema, and theater, I felt like I was being handed an entirely new toolkit. Learning about the technicalities of stagecraft—how a subtle shift in lighting intensity completely alters the mood, or how the structural balance of a stage or a film frame commands focus—has deeply influenced my own artistic perspective. I’m leaving this class not just with a deeper appreciation for other mediums, but with a more intentional, critical, and powerful approach to my own practice.`
+    }
+];
+
+function buildRows() {
+    const delivContainer = document.getElementById("deliverablesRow");
+    delivContainer.innerHTML = "";
+    deliverablesData.forEach((item, index) => {
+        delivContainer.appendChild(createNetflixCard(item, index, 'deliverables'));
+    });
+
+    const reviewContainer = document.getElementById("reviewsRow");
+    reviewContainer.innerHTML = "";
+    reviewsData.forEach((item, index) => {
+        reviewContainer.appendChild(createNetflixCard(item, index, 'reviews'));
+    });
+}
+
+function createNetflixCard(item, index, datasetKey) {
+    const card = document.createElement("div");
+    card.className = "media-card";
+    card.style.backgroundImage = `url('${item.image}')`;
+    card.onclick = () => openGateModal(index, datasetKey);
+
+    card.innerHTML = `
+        <div class="card-meta-pop">
+            <div class="pop-title">${item.title}</div>
+            <div class="pop-badge-row">
+                ${item.playable ? '<span class="play-mini-badge">► Watch</span>' : ''}
+                <span class="pop-tags" style="color: ${item.playable ? '#46d369' : 'var(--netflix-red)'}">${item.type}</span>
+            </div>
+        </div>
+    `;
+    return card;
+}
+
+function openGateModal(index, datasetKey) {
+    const data = datasetKey === 'deliverables' ? deliverablesData[index] : reviewsData[index];
+    
+    document.getElementById("modalHeroArt").style.backgroundImage = `linear-gradient(to top, var(--surface-gray), transparent), url('${data.image}')`;
+    document.getElementById("modalTitleText").innerText = data.title;
+    document.getElementById("modalMetaBadge").innerText = data.type;
+    document.getElementById("modalMetaDate").innerText = data.date;
+    document.getElementById("modalMetaTags").innerText = data.tags;
+    document.getElementById("modalMainText").innerText = data.content;
+
+    document.getElementById("sidebarContextLabel").innerText = datasetKey === 'reviews' ? "Instructor: " : "Tags: ";
+
+    const actionContainer = document.getElementById("modalActionContainer");
+    actionContainer.innerHTML = "";
+    if (data.playable && data.driveUrl) {
+        const playLink = document.createElement("a");
+        playLink.className = "modal-play-btn";
+        playLink.href = data.driveUrl;
+        playLink.target = "_blank";
+        playLink.innerHTML = `▶ Watch Assignment`;
+        actionContainer.appendChild(playLink);
+    }
+
+    const episodesBox = document.getElementById("modalEpisodesBox");
+    const epTarget = document.getElementById("episodesListTarget");
+    
+    if (data.isSeries && data.episodes) {
+        episodesBox.style.display = "block";
+        document.getElementById("episodeCountTag").innerText = `${data.episodes.length} Slides`;
+        epTarget.innerHTML = "";
+        
+        data.episodes.forEach((ep, idx) => {
+            const epRow = document.createElement("a");
+            epRow.className = "episode-row";
+            epRow.href = ep.link || "#";
+            epRow.target = "_blank"; 
+            
+            epRow.innerHTML = `
+                <div class="ep-number">${idx + 1}</div>
+                <div class="ep-thumb" style="background-image: url('${ep.thumbnail}')"></div>
+                <div class="ep-meta">
+                    <h4>${ep.title}</h4>
+                    <p>${ep.summary}</p>
+                </div>
+            `;
+            epTarget.appendChild(epRow);
+        });
+    } else {
+        episodesBox.style.display = "none";
+    }
+
+    const modal = document.getElementById("infoPortalModal");
+    modal.style.display = "flex";
+    setTimeout(() => {
+        modal.querySelector('.modal-content').style.transform = "translateY(0)";
+    }, 10);
+}
+
+function closeGateModal(event) {
+    const modal = document.getElementById("infoPortalModal");
+    modal.querySelector('.modal-content').style.transform = "translateY(20px)";
+    setTimeout(() => {
+        modal.style.display = "none";
+    }, 200);
+}
+
+window.addEventListener('scroll', () => {
+    const nav = document.getElementById("navbar");
+    if (window.scrollY > 50) {
+        nav.style.backgroundColor = "var(--bg-black)";
+    } else {
+        nav.style.background = "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%)";
+    }
+});
+
+buildRows();
+</script>
+</body>
+</html>
