@@ -609,7 +609,7 @@ body {
                 <!-- True Netflix Style Series Episodes Window -->
                 <div class="episodes-section" id="modalEpisodesBox">
                     <div class="episodes-header">
-                        <h3>Presentation Requirements</h3>
+                        <h3>Requirements</h3>
                         <span class="series-tag" id="episodeCountTag">3 Parts</span>
                     </div>
                     <div id="episodesListTarget">
@@ -622,7 +622,7 @@ body {
     </div>
 
 <script>
-// Row 1 Data Array (Positions of Digital Image and Iconography swapped)
+// Row 1 Data Array (Includes newly integrated Visual Iconography Analysis card)
 const deliverablesData = [
     {
         title: "Theater",
@@ -668,6 +668,24 @@ const deliverablesData = [
         isSeries: false,
         playable: false,
         content: `The story of Joey Velasco serves as a profound reminder that art, at its core, is a democratic and spiritual equalizer. His journey teaches us that true artistic vision cannot be manufactured by formal institutions or bought with privilege; rather, it is born from deep empathy and an open heart. By thrusting the marginalized, the forgotten, and the ordinary street children into the literal and metaphorical spotlight of Hapag ng Pag-asa, Velasco completely reframes what we consider "worthy" of fine art. For me, learning about his work shifts the definition of success in creative practice. It shows that the ultimate purpose of gaining a visual voice is not to achieve personal fame, but to share that platform with those who have been silenced by society. His legacy challenges us to look closer at our own surroundings—to see the profound human dignity hidden within everyday struggles, and to realize that our own creativity is most powerful when it is used as an instrument for social consciousness, compassion, and hope.`
+    },
+    {
+        title: "Summative Test",
+        type: "Exam",   
+        date: "May 15, 2026",
+        image: "images/exam.png",
+        tags: "Exam, Assessment",
+        isSeries: true,
+        playable: false,
+        content: `Securing a high score on this assessment feels incredibly validating because it directly reflects how my perspective has evolved throughout this course; I no longer just look at creative works, but truly know how to "read" them. Mastering these concepts, from distinguishing between purely aesthetic fine arts and functional craft to analyzing the literal lines and shapes that build a composition, has given me a reliable architectural framework for visual literacy. Unpacking advanced analytical frameworks like semiotics, iconographic symbols, and auteur theory in cinema has taught me that art is never created in a vacuum. It possesses deep socio-political weight capable of stimulating critical reflection and driving human empathy. This perfect score proves that I have successfully transitioned from an intuitive creator to a critical viewer, leaving me equipped with a powerful academic toolkit to decode the historical and cultural narratives hidden within our visual world.`,
+        episodes: [
+            {
+                title: "Summative Test: Reading in Visual Arts",
+                summary: "After securing a high score on this assessment, I was excempted for taking the final examination.",
+                thumbnail: "images/exam.png",
+                link: "https://drive.google.com/file/d/1EvdXq_LpGTMfL8EVfT_9o2rsPLJb7MkF/view"
+            }
+        ]
     }
 ];
 
@@ -681,9 +699,7 @@ const reviewsData = [
         tags: "Johanna Alcantara",
         isSeries: false,
         playable: false,
-        content: `Reflecting on this past semester, our time in your class has been both engaging and profoundly meaningful. Although external circumstances occasionally disrupted our regular schedule, the sessions we did share left a lasting impact on my academic journey. I deeply admire your mastery of the subject matter and the compelling presence every time we are in a classroom. You consistently cultivate an atmosphere that is both vibrant and intellectually stimulating, effortlessly capturing our attention. I am incredibly grateful that your priority was always our actual comprehension and retention of the concepts, rather than simply rushing to complete the syllabus.
-
-I would like to express my sincere gratitude  for your exceptional instructional approach, compassion and understanding you extended to both myself and our entire block throughout the term. Your support has guided us in ways you may not even realize, and we are truly grateful. Delving into the study of Visual Arts under your guidance has undoubtedly been one of the most enriching experiences. Your ability to make complex ideas accessible and engaging has not only deepened our understanding but also ignited a genuine passion for the subject. I am truly thankful for the opportunity to learn from you and for the positive impact you have had on my academic growth. Thank you once again for your dedication and for creating such a memorable learning experience.`
+        content: `Reflecting on this past semester, our time in your class has been both engaging and profoundly meaningful. Although external circumstances occasionally disrupted our regular schedule, the sessions we did share left a lasting impact on my academic journey. I deeply admire your mastery of the subject matter and the compelling presence every time we are in a classroom. You consistently cultivate an atmosphere that is both vibrant and intellectually stimulating, effortlessly capturing our attention. I am incredibly grateful that your priority was always our actual comprehension and retention of the concepts, rather than simply rushing to complete the syllabus.\n\nI would like to express my sincere gratitude for your exceptional instructional approach, compassion and understanding you extended to both myself and our entire block throughout the term. Your support has guided us in ways you may not even realize, and we are truly grateful. Delving into the study of Visual Arts under your guidance has undoubtedly been one of the most enriching experiences. Your ability to make complex ideas accessible and engaging has not only deepened our understanding but also ignited a genuine passion for the subject. I am truly thankful for the opportunity to learn from you and for the positive impact you have had on my academic growth. Thank you once again for your dedication and for creating such a memorable learning experience.`
     },
     {
         title: "Feedback: Reading Visual Arts",
@@ -693,9 +709,7 @@ I would like to express my sincere gratitude  for your exceptional instructional
         tags: "Johanna Alcantara",
         isSeries: false,
         playable: false,
-        content: `I wasn’t a stranger to art, but I didn’t realize how much I still had left to learn about truly reading it. As someone who already loves making and creating, I thought I understood visual language. I was used to the instinctual, hands-on rush of bringing an idea to life, but this course challenged me to slow down and analyze the invisible forces behind why visual art actually works. Moving through the early weeks—exploring how meaning shifts entirely between what an author intends and how an audience decodes it—was a massive turning point for me. It made me realize that my own creative choices aren't just aesthetic preferences; they are part of an active, ongoing dialogue with whoever stands in front of my work.
-
-The curriculum really opened my eyes to the deep socio-political weight that art carries. Seeing how a single piece like Joey Velasco’s Hapag ng Pag-asa can function as a tool for social consciousness, empathy, and national resilience completely expanded my view of what art can achieve. It taught me that our creative voices are most potent when they serve as a platform for the forgotten. As the term progressed into our reporting weeks on photography, cinema, and theater, I felt like I was being handed an entirely new toolkit. Learning about the technicalities of stagecraft—how a subtle shift in lighting intensity completely alters the mood, or how the structural balance of a stage or a film frame commands focus—has deeply influenced my own artistic perspective. I’m leaving this class not just with a deeper appreciation for other mediums, but with a more intentional, critical, and powerful approach to my own practice.`
+        content: `I wasn’t a stranger to art, but I didn’t realize how much I still had left to learn about truly reading it. As someone who already loves making and creating, I thought I understood visual language. I was used to the instinctual, hands-on rush of bringing an idea to life, but this course challenged me to slow down and analyze the invisible forces behind why visual art actually works. Moving through the early weeks—exploring how meaning shifts entirely between what an author intends and how an audience decodes it—was a massive turning point for me. It made me realize that my own creative choices aren't just aesthetic preferences; they are part of an active, ongoing dialogue with whoever stands in front of my work.\n\nThe curriculum really opened my eyes to the deep socio-political weight that art carries. Seeing how a single piece like Joey Velasco’s Hapag ng Pag-asa can function as a tool for social consciousness, empathy, and national resilience completely expanded my view of what art can achieve. It taught me that our creative voices are most potent when they serve as a platform for the forgotten. As the term progressed into our reporting weeks on photography, cinema, and theater, I felt like I was being handed an entirely new toolkit. Learning about the technicalities of stagecraft—how a subtle shift in lighting intensity completely alters the mood, or how the structural balance of a stage or a film frame commands focus—has deeply influenced my own artistic perspective. I’m leaving this class not just with a deeper appreciation for other mediums, but with a more intentional, critical, and powerful approach to my own practice.`
     }
 ];
 
@@ -759,7 +773,7 @@ function openGateModal(index, datasetKey) {
     
     if (data.isSeries && data.episodes) {
         episodesBox.style.display = "block";
-        document.getElementById("episodeCountTag").innerText = `${data.episodes.length} Slides`;
+        document.getElementById("episodeCountTag").innerText = `${data.episodes.length} ${datasetKey === 'deliverables' && data.title.includes('Visual') ? 'Files' : 'Slides'}`;
         epTarget.innerHTML = "";
         
         data.episodes.forEach((ep, idx) => {
